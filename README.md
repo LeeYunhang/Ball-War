@@ -14,4 +14,4 @@
 
 ## 使用gulp`gulp test`build 编译项目
 
-## 欢迎访问我的官方博客[Mr-code](www.mrcodex.com)
+## 欢迎访问我的官方博客[Mr-code](http://mrcodex.com)
