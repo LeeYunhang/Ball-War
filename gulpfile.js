@@ -46,7 +46,7 @@ gulp.task('default', () => {
 
 gulp.task('start:server', ()=> {
   $.connectServer.server({
-    root: config.dist,
+    root: [config.dist, 'bower_components'],
     livereload: true,
     port: config.port
   });

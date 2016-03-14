@@ -3,16 +3,31 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
-    <script src="/scripts/jquery"></script>
-    <script src="/scripts/bootstrap.min.js"></script>
+    <!-- <script src="/scripts/jquery.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="/angular-material/angular-material.min.css" media="screen" title="no title" charset="utf-8">
   </head>
-  <body>
-    <input type="text" ng-model="a">
-    {{a}}
-    <button class="btn-success" type="button" name="button"></button>
-    <!-- 引入主JS文件 -->
-    <script src="/scripts/app.js"></script>1
-    <!-- 引入angularjs -->
-    <script src="/scripts/angular.min.js"></script>1
+  <body ng-controller="MainController">
+    <!--内容开始  -->
+    <header>
+    </header>
+
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+      <md-button class="md-raised">Button</md-button>
+      <md-button class="md-raised md-primary">Primary</md-button>
+      <md-button ng-disabled="true" class="md-raised md-primary">Disabled</md-button>
+      <md-button class="md-raised md-warn">Warn</md-button>
+      <div class="label">Raised</div>
+    </section>
+    <footer>
+    </footer>
+
+    <!--内容结束  -->
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/angular-animate/angular-animate.min.js"></script>
+    <script src="/angular-aria/angular-aria.min.js"></script>
+    <script src="/angular-messages/angular-messages.min.js"></script>
+    <script src="/angular-material/angular-material.min.js"></script>
+    <script src="/scripts/app.js"></script>
   </body>
 </html>
