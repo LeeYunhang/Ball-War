@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+
     <!-- <script src="/scripts/jquery.min.js"></script>
     <script src="/scripts/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="/angular-material/angular-material.min.css" media="screen" title="no title" charset="utf-8">
@@ -10,24 +12,28 @@
   <body ng-controller="MainController">
     <!--内容开始  -->
     <header>
+      <nav>
+        <ul>
+          <li>BallWar!　就爱玩游戏!</li>
+        </ul>
+      </nav>
     </header>
-
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-      <md-button class="md-raised">Button</md-button>
-      <md-button class="md-raised md-primary">Primary</md-button>
-      <md-button ng-disabled="true" class="md-raised md-primary">Disabled</md-button>
-      <md-button class="md-raised md-warn">Warn</md-button>
-      <div class="label">Raised</div>
+    <section class="ball-container">
+      <div></div>
+      <aside class="ball-left"></aside>
+      <section class="ball-middle">
+        <section class="ball-middle-top"></section>
+        <section class="ball-middle-mid" id="game"></section>
+        <section class="ball-middle-bottom"></section>
+      </section>
+      <aside class="ball-right"></aside>
     </section>
     <footer>
     </footer>
 
     <!--内容结束  -->
     <script src="/scripts/angular.min.js"></script>
-    <script src="/angular-animate/angular-animate.min.js"></script>
-    <script src="/angular-aria/angular-aria.min.js"></script>
-    <script src="/angular-messages/angular-messages.min.js"></script>
-    <script src="/angular-material/angular-material.min.js"></script>
+    <script src="scripts/hilo/hilo-standalone.min.js"></script>
     <script src="/scripts/app.js"></script>
   </body>
 </html>

@@ -1,0 +1,43 @@
+/**
+　* 这个是主样式文件
+  * @auther mrcode
+ */
+
+body > header > nav  {
+    width: 100%;
+    height: 40px;
+
+    background: #333333;
+    box-shadow:0 0 10px 2px #000;
+    position: fixed;
+    margin-top: 0px;
+}
+
+body > header > nav li {
+    display: inline-block;
+    color: snow;
+
+    font-size:large;
+    margin-top: 10px;
+}
+
+body > header > ul {
+    height:100%;
+}
+
+aside.ball-left aside.ball-right {
+    width: 20%;
+}
+
+aside.ball-middle {
+    width: 60%;
+}
+
+section.ball-container{
+    width: 100%;
+}
+
+section.ball-container:first-child {
+    width: 100%;
+    height: 40px;
+}

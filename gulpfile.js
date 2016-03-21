@@ -53,7 +53,7 @@ gulp.task('start:server', ()=> {
 });
 
 gulp.task('concat', ()=> {
-  return gulp.src(paths.scripts)
+  return gulp.src([paths.scripts, `!${config.app}/scripts/hilo/**/*.js`])
     .pipe($.concat(config.mainScript))
     .pipe(gulp.dest(paths.tmp));
 });
@@ -100,20 +100,30 @@ gulp.task('bootstrap:js', ()=> {
 //--------------------bootstrap ---end
 
 
+
 //babel任务, 用于将ES6的代码编译成ES5的JS代码 并且压缩
-gulp.task('babel', ()=> gulp.src(paths.tmp + '/app.js').pipe($.babel({presets:['es2015']}))
-  .pipe($.uglify())
-  .pipe(gulp.dest(paths.build.script)));
+gulp.task('babel', ()=>gulp.src(paths.tmp + '/app.js')
+    .pipe($.babel({presets:['es2015']}))
+    //.pipe($.uglify())
+    .pipe(gulp.dest(paths.build.script)));
 
   gulp.task('copy:imgs', ()=> {
     gulp.src(config.app + '/')
   });
 
+gulp.task('copy:hilo', ()=> {
+  gulp.src(`${config.app}/scripts/hilo/**/*.js`)
+    .pipe(gulp.dest(`${paths.build.script}/hilo`));
+});
+
 gulp.task('clean:tmp', ()=> fs.unlink(paths.tmp + '/' + config.mainScript, (err, text)=> {}));
 gulp.task('clean:dist', ()=> fs.unlink(paths.build.script + '/' + config.mainScript, (err, text)=> {}));
 
 //清理项目  检查脚本  链接   压缩   编译成ES5代码
-gulp.task('build', cb=> $.runSequence(['clean:tmp', 'clean:dist'], ['concat', 'move:views', 'move:index', 'styles', 'bootstrap:', 'bootstrap:js', 'jquery'], 'babel', 'lint:scripts', 'angular', cb));
+gulp.task('build',
+    cb=> $.runSequence(['clean:tmp', 'clean:dist'],
+        ['concat', 'move:views', 'move:index', 'styles', 'bootstrap:', 'bootstrap:js', 'jquery', 'copy:hilo'],
+        'babel', 'lint:scripts', 'angular', cb));
 
 gulp.task('refresh', ()=> {
   gulp.src([paths.styles, paths.html, paths.scripts]).pipe($.connectServer.reload());
