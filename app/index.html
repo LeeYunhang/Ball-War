@@ -1,35 +1,64 @@
 <!DOCTYPE html>
-<html ng-app="ballWar">
+<html ng-app="ballWar" manifest="">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv='cache-control' content='no-cache'>
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main.css">
-
-    <!-- <script src="/scripts/jquery.min.js"></script>
-    <script src="/scripts/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="/angular-material/angular-material.min.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body ng-controller="MainController">
-    <!--内容开始  -->
-    <header>
+  <div class="wrapper">
       <nav>
         <ul>
-          <li>BallWar!　就爱玩游戏!</li>
+          <li><a href="#gameArea">游戏地带</a></li>
+          <li><a href="#socialArea">社交场所</a></li>
+          <li><a href="#pageFooter">关于我们</a></li>
         </ul>
       </nav>
-    </header>
-    <section class="ball-container">
-      <div></div>
-      <aside class="ball-left"></aside>
-      <section class="ball-middle">
-        <section class="ball-middle-top"></section>
-        <section class="ball-middle-mid" id="game"></section>
-        <section class="ball-middle-bottom"></section>
-      </section>
-      <aside class="ball-right"></aside>
-    </section>
+    <main>
+
+      <!--整个游戏区-->
+      <div id="gameArea" name="gameArea">
+        <div class="headArea">
+          <h2>游戏地带</h2>
+        </div>
+        <div class="bodyArea">
+          <div id="gameTop">
+            <span>嘿 伙计 这里是头部哦</span>
+          </div>
+          <div id="gameStage"></div>
+          <div id="gameBottom">
+            <span>嘿 伙计 这里是头部哦</span>
+          </div>
+        </div>
+        <div class="footerArea">
+        </div>
+      </div>
+
+      <!--社交区-->
+      <div id="socialArea" name="socialArea">
+        <div class="headArea">
+          <h2>我的社交</h2>
+        </div>
+        <div class="bodyArea">
+
+        </div>
+        <div class="footerArea"></div>
+      </div>
+    </main>
     <footer>
+      <section name="pageFooter">
+      </section>
+      <section>
+        <p>我的邮箱 mrcode734202639@gmail.com</p>
+        <div>
+          <span>欢迎访问我的个人主页</span>
+          <a href="http://mrcodex.com">Mr-code</a>
+        </div>
+      </section>
     </footer>
+  </div>
 
     <!--内容结束  -->
     <script src="/scripts/angular.min.js"></script>

@@ -3,41 +3,108 @@
   * @auther mrcode
  */
 
-body > header > nav  {
-    width: 100%;
-    height: 40px;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
+}
 
-    background: #333333;
-    box-shadow:0 0 10px 2px #000;
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+nav {
     position: fixed;
-    margin-top: 0px;
+    width: 100%;
 }
 
-body > header > nav li {
-    display: inline-block;
+main {
+    margin: 0 150px;
+    padding-top: 100px;
+}
+
+footer {
+    width: 100%;
+    height: 400px;
+    background-color: #3f3f3f;
+}
+
+div.wrapper > nav {
+    background-color: brown;
+    box-shadow: 0 3px 3px #888888;
+}
+
+nav li {
+    float: left;
+}
+
+nav ul {
+    width: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+div.wrapper > nav a {
+    display: block;
+    padding: 20px;
+    color: lightgray;
+    font-size: 1.2em;
+}
+
+div.wrapper > nav a:hover {
     color: snow;
-
-    font-size:large;
-    margin-top: 10px;
+    text-decoration: none;
 }
 
-body > header > ul {
-    height:100%;
-}
-
-aside.ball-left aside.ball-right {
-    width: 20%;
-}
-
-aside.ball-middle {
-    width: 60%;
-}
-
-section.ball-container{
+footer > section:first-child {
+    height: 280px;
     width: 100%;
+    background-color: #666666;
 }
 
-section.ball-container:first-child {
-    width: 100%;
+footer > section:last-child {
+    padding: 30px 0;
+
+    font-size: 1.4em;
+    color: #999999;
+}
+
+footer > section:last-child > p {
+    width: 400px;
+    margin: 0 auto;
+}
+
+footer > section:last-child > div {
+    width: 400px;
+    margin: 0 auto;
+}
+
+main h2 {
+    padding-left: 20px;
+    color: #999999;
+    border-bottom: 2px solid #999999;
+}
+
+div.bodyArea {
+    height: 800px;
+    padding-left: 20px;
+}
+
+div#gameTop {
     height: 40px;
+    background: #f00;
+}
+
+div#gameBottom {
+    height: 40px;
+    background: #ffff00;
+}
+
+div#gameStage {
+    width: 1100px;
+    margin: 0 auto;
 }

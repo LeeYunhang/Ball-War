@@ -5,6 +5,7 @@ var $ = require('gulp-load-plugins')();
 var fs = require('fs');
 var watch = require('gulp-watch');
 var Server = require('karma').Server;
+var browserSync = require('browser-sync').create();
 $.runSequence = require('run-sequence');
 $.connectServer = require('gulp-connect');
 $.openURL = require('open');
@@ -103,10 +104,10 @@ gulp.task('bootstrap:js', ()=> {
 
 //babel任务, 用于将ES6的代码编译成ES5的JS代码 并且压缩
 gulp.task('babel', ()=>gulp.src(paths.tmp + '/app.js')
+    //.pipe(browserify)
     .pipe($.babel({presets:['es2015']}))
     //.pipe($.uglify())
     .pipe(gulp.dest(paths.build.script)));
-
   gulp.task('copy:imgs', ()=> {
     gulp.src(config.app + '/')
   });
@@ -119,21 +120,26 @@ gulp.task('copy:hilo', ()=> {
 gulp.task('clean:tmp', ()=> fs.unlink(paths.tmp + '/' + config.mainScript, (err, text)=> {}));
 gulp.task('clean:dist', ()=> fs.unlink(paths.build.script + '/' + config.mainScript, (err, text)=> {}));
 
-//清理项目  检查脚本  链接   压缩   编译成ES5代码
+//清理项目  检查脚本  链接   压缩   编译成E  S5代码
 gulp.task('build',
     cb=> $.runSequence(['clean:tmp', 'clean:dist'],
         ['concat', 'move:views', 'move:index', 'styles', 'bootstrap:', 'bootstrap:js', 'jquery', 'copy:hilo'],
         'babel', 'lint:scripts', 'angular', cb));
 
-gulp.task('refresh', ()=> {
-  gulp.src([paths.styles, paths.html, paths.scripts]).pipe($.connectServer.reload());
+gulp.task('watch', ['build'], ()=> browserSync.reload());
+
+gulp.task('browser-sync', ()=> {
+  gulp.watch([paths.styles, paths.html, paths.scripts], ['watch']);
+  //gulp.watch([paths.styles, paths.html, paths.scripts]).on('change', browserSync.reload);
+  browserSync.init({
+    server: {
+      baseDir: './dist',
+      files: '**'
+    }
+  });
 });
 
-gulp.task('watch', ()=> {
-  gulp.watch([paths.styles, paths.html, paths.scripts], ['build', 'refresh']);
-});
-
-gulp.task('serve', cb => $.runSequence('build', 'start:client', 'watch', cb));
+gulp.task('serve', cb => $.runSequence('build', 'browser-sync', cb));
 
 gulp.task('test', done=> {
   new Server({
@@ -144,8 +150,6 @@ gulp.task('test', done=> {
       __dirname + '/dist/scripts/app.js',
       __dirname + '/bower_components/angular-mocks/angular-mocks.js',
       __dirname + '/test/test.js',
-
-      // __dirname + '/dist/scripts/**/!(angular.min.).js'
     ],
   }, done).start();
 });

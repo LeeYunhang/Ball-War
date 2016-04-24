@@ -2,20 +2,12 @@
  * Created by mrcode on 16-3-19.
  */
 
-//var asset = function () {
-//    'use strict';
-//
-//    return {
-//
-//    };
-//
-//}
 
-class Asset {
+
+let Asset = {
+    players: [],
     load(callback) {
-        //资源列表
-        var resources = [];
-
+        var resources = [];        //资源列表
         this.callback = callback;  //设置回调
 
         //加载资源
@@ -23,12 +15,12 @@ class Asset {
         this.queue.add(resources);
         this.queue.on('complete', this.onComplete.bind(this));
         this.queue.start();
-    }
+    },
 
     onComplete() {
-        //
-        //...。
-        //
+
+        this.players.push(new Player('Mr-code', new Ball('Mr-code')));
+
         this.queue.off('complete');
         this.queue.fire('complete');
         this.callback();;
