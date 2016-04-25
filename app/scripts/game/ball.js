@@ -1,27 +1,25 @@
 /**
  * Created by mrcode on 16-4-3.
- *
+ * 小球的数据结构
  */
-
-//该类主要用来制造小球
 class Ball {
 
-    constructor(owner, point = new Point(0, 0), radius = 10, color = '#000', background = '#fff', eats = 0) {
+    constructor(owner, point = new Point(0, 0), color = '#000', background = '#fff', eats = 0) {
         this._owner = owner;
         this._point = point;
-        this._radius = radius;
         this._color = color;
         this._eats = eats;
         this.background = background;
     }
 
     get speed() {
+        return Math.round((40000 / Math.pow(200 + this.eats, 0.9)));
     }
 
-    set speed(s) {
-    }
+    //set speed(s) {}
 
     get weight() {
+        return Math.round(Math(this.eats, 1.2));
     }
 
     //set weight(w) {}
@@ -47,13 +45,8 @@ class Ball {
     }
 
     get radius() {
-        return this._radius
+        return 10;
     }
-
-    set radius(r) {
-        this._radius = r
-    }
-
 
     toString() {
         return this._owner;

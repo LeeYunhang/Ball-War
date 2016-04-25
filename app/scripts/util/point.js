@@ -27,8 +27,8 @@ class Point {
     }
 
     distance(point) {
-        return Math.pow(Math.pow(this.x - point.x, 2) +
-            Math.pow(this.y - point.y, 2), 0.5);
+        return Math.floor(Math.pow(Math.pow(this.x - point.x, 2) +
+            Math.pow(this.y - point.y, 2), 0.5));
     }
 
     toString() {

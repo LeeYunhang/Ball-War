@@ -1,14 +1,17 @@
 /**
  * Created by mrcode on 16-4-3.
+ * 小球的控制器
  */
 
 
 class BallController {
 
-    constructor(ball) {
-        this.ball = ball;
-        if (!(ball instanceof Ball)) {
-            throw TypeError('参数ball的类型不能是Ball');
+    constructor(ballView) {
+        this.ball = ballView.ball;
+        this.ballView = ballView;
+
+        if (!(ballView instanceof BallView)) {
+            throw TypeError('参数ball的类型必须是BallView');
         }
     }
 
@@ -16,44 +19,20 @@ class BallController {
      * 小球控制器启动
      * */
     start() {
-        var self = Asset.players[0].username;
-        this.painting();   //画小球
+        var self = Asset.players[0].playname;   //获得玩家自己的游戏昵称
+        this.ballView.painting();               //刷新小球
 
         //如果控制的小球是自己的话
         if (this.ball.owner == self) {
-            var canvas = document.querySelector('#gameStage');
-            canvas.addEventListener('keydown', ((e)=> {
+            var canvas = game.canvas;
+            document.addEventListener('keydown', e=> {
                 var keycode = e.key;
+                this.keydown(keycode);
+            }, false);
 
-                //如果当前的stage获得了焦点的话
-                if (canvas === document.activeElement) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.keydown(keycode);
-                }
-            }).bind(this));
-
-            canvas.onclick = (e => {
-                e.preventDefault();
-                this.click(new Point(e.x, e.y));
-            }).bind(this);
+            canvas.onclick = e =>this.click(new Point(e.clientX, e.clientY));
 
         }
-    }
-
-    /**
-     * 画小球
-     * */
-    painting() {
-        var point = this.ball.point;
-
-        var tmp = new Hilo.Graphics()
-            .lineStyle(1, this.ball.color)
-            .beginFill(this.ball.background)
-            .drawCircle(point.x, point.y, this.ball.radius)
-            .endFill()
-            .addTo(game.stage);   //添加小球到stage
-
     }
 
     /**
@@ -88,7 +67,7 @@ class BallController {
         if (to instanceof Point) {
             this.move(to, this.ball.speed)
         } else {
-            throw new TypeError();
+            throw new TypeError()
         }
     };
 
@@ -98,6 +77,21 @@ class BallController {
      * @param {Number} 移动的速度
      * */
     move(to, speed) {
+        var canvas = game.canvas,
+            left = canvas.getBoundingClientRect().left,
+            top  = canvas.getBoundingClientRect().top,
+            distance = to.distance(this.ball.point),
+            x = to.x - left - this.ball.radius,
+            y = to.y - top - this.ball.radius;
 
+
+        Hilo.Tween.to(this.ballView.ballGraphic, {x: x, y: y},
+            {
+                duration: 1000 * (distance / this.ball.speed),
+                loop: false,
+                //ease: Hilo.Ease.Quad.EaseIn,
+            });
+
+        this.ball.point = to;
     }
 }

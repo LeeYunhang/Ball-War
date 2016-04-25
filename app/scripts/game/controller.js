@@ -12,8 +12,9 @@ var Controller = {
         //给每一个球加上控制器
         for (let i = 0, length = Asset.players.length; i < length; ++i) {
             let ball = Asset.players[i].ball,
-                selfController = new BallController(ball);
+                selfController = new BallController(new BallView(ball));
             selfController.start();
+            this.controllers.push(selfController);
         }
     }
 }

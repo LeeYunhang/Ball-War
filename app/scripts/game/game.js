@@ -17,6 +17,7 @@
             Asset.load((()=> {
                 "use strict";
                 this.initStage();
+                this.canvas = document.querySelector('canvas');
                 Controller.start();
             }).bind(this))
 
@@ -33,12 +34,13 @@
             });
 
             //添加刷新
-            this.ticker = new Hilo.Ticker(60);
+            this.ticker = new Hilo.Ticker(30);
             this.ticker.addTick(Hilo.Tween);
             this.ticker.addTick(this.stage);
             this.ticker.start();
 
-            gameBackground.initBackground(this.stage);           //初始化背景
+            //gameBackground.initBackground(this.stage);           //初始化背景
+            gameBackground.init(this.stage);                   //初始化背景
             document.getElementById('gameStage').appendChild(this.stage.canvas); //添加
             this.stage.canvas.setAttribute('style', 'position'); //取消默认的绝对定位
             this.stage.enableDOMEvent(Hilo.event.POINTER_START, true); //允许舞台响应鼠标点击事件
