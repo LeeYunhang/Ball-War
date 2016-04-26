@@ -39,7 +39,6 @@
             this.ticker.addTick(this.stage);
             this.ticker.start();
 
-            //gameBackground.initBackground(this.stage);           //初始化背景
             gameBackground.init(this.stage);                   //初始化背景
             document.getElementById('gameStage').appendChild(this.stage.canvas); //添加
             this.stage.canvas.setAttribute('style', 'position'); //取消默认的绝对定位

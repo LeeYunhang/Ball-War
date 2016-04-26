@@ -7,6 +7,8 @@ class Region {
     constructor(x, y, container) {
         this.x = x;
         this.y = y;
+        this.width = game.width/2;
+        this.height = game.height/2;
         this.container = container;
     }
 }

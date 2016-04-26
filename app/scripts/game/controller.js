@@ -16,5 +16,5 @@ var Controller = {
             selfController.start();
             this.controllers.push(selfController);
         }
-    }
+    },
 }

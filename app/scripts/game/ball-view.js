@@ -22,5 +22,7 @@ class BallView {
             .drawCircle(point.x, point.y, this.ball.radius)
             .endFill()
             .addTo(game.stage);   //添加小球到stage
+        this.ballGraphic.x = game.width/2;
+        this.ballGraphic.y = game.height/2;
     }
 }

@@ -10,8 +10,6 @@ var gameBackground = {
     backgroundColor: '#333333',
     x: null,
     y: null,
-
-    background: null,    //背景的实体变量
     regionViews: [],
 
     /**
@@ -28,8 +26,6 @@ var gameBackground = {
             x: gameBackground.width / -2 + game.width / 2,
             y: gameBackground.height / -2 + game.height / 2,
         }).addTo(stage);
-
-        console.log(this.container.height);
 
         for(let i = 0; i < this.h; ++i){
             this.regionViews.push([]);

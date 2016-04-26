@@ -65,7 +65,18 @@ class BallController {
     click(to) {
         "use strict";
         if (to instanceof Point) {
-            this.move(to, this.ball.speed)
+            var canvas = game.canvas,
+                point = this.ball.point,
+                left = canvas.getBoundingClientRect().left,
+                top  = canvas.getBoundingClientRect().top,
+                offsetX, offsetY;
+
+            to.x -=left; to.y -= top;         //求出相对于视口左上角的距离
+            offsetX = to.x - game.width/2;
+            offsetY = to.y - game.height/2;
+            to.x = point.x + offsetX;        //求出目的坐标
+            to.y = point.y + offsetY;
+            this.move(to, this.ball.speed);
         } else {
             throw new TypeError()
         }
@@ -77,21 +88,76 @@ class BallController {
      * @param {Number} 移动的速度
      * */
     move(to, speed) {
-        var canvas = game.canvas,
-            left = canvas.getBoundingClientRect().left,
-            top  = canvas.getBoundingClientRect().top,
-            distance = to.distance(this.ball.point),
-            x = to.x - left - this.ball.radius,
-            y = to.y - top - this.ball.radius;
+        var distance = to.distance(this.ball.point),
+            offsetX = to.x - this.ball.point.x,
+            offsetY = to.y - this.ball.point.y;
 
+        for(let i = 0; i < gameBackground.v; ++i) {
+            for (let j = 0; j < gameBackground.h; ++j) {
+                let regionView = gameBackground.regionViews[i][j],
+                    _x = regionView.x,
+                    _y = regionView.y;
+                var tmp = gameBackground.regionViews;
 
-        Hilo.Tween.to(this.ballView.ballGraphic, {x: x, y: y},
-            {
-                duration: 1000 * (distance / this.ball.speed),
-                loop: false,
-                //ease: Hilo.Ease.Quad.EaseIn,
-            });
+                //如果region在viewport里的话
+                if(regionView.regionInViewport()) {
+                    Hilo.Tween.to(regionView, {x: _x - offsetX, y: _y - offsetY},
+                        {
+                            duration: 1000 * (distance / this.ball.speed),
+                            loop: false,
+                        });
 
-        this.ball.point = to;
+                } else{  //调整region的位置
+                    if(regionView.beyondTop()) {
+                        let length = gameBackground.regionViews[i].length,
+                            lastRegion = gameBackground.regionViews[i][length - 1];
+
+                        //超出的region放到最下面,同时交换在数组中的顺序,使其数组顺序与视图上的顺序一致
+                        regionView.y = lastRegion.y + lastRegion.height();
+                        gameBackground.regionViews[i].shift();
+                        gameBackground.regionViews[i].push(regionView);
+                        j = -1;
+                        continue;
+                    } else if(regionView.beyondBottom()) {
+                        let firstRegion = gameBackground.regionViews[i][0];
+                        regionView.y = firstRegion.y - firstRegion.height();
+                        gameBackground.regionViews[i].pop();
+                        gameBackground.regionViews[i].unshift(regionView);
+                    }
+                    //} else if (regionView.beyondLeft()) {
+                    //    let length = gameBackground.regionViews[i].length,
+                    //        last = gameBackground.regionViews[length - 1][j];
+                    //    for (let k = 0; k < length - 1; ++k) {
+                    //        gameBackground.regionViews[k][j] = gameBackground.regionViews[k + 1][j];
+                    //    }
+                    //    gameBackground.regionViews[length - 1][j] = regionView;
+                    //    regionView.x = last.x + last.width();
+                    //    --j; continue;
+                    //}
+                    //} else if (regionView.beyondRight()){
+                    //    let firstRegion = gameBackground.regionViews[0][j],
+                    //        length = gameBackground.regionViews.length;
+                    //
+                    //    regionView.x = firstRegion.x - firstRegion.width();
+                    //    for(let k = length-2; k >= 0; --k){
+                    //        gameBackground[k+1][j] = gameBackground[k][j];
+                    //    }
+                    //
+                    //    gameBackground[0][j] = regionView;
+                    //}
+                    //
+                    //移动调整后的region
+                    Hilo.Tween.to(regionView, {x: regionView.x - offsetX, y: regionView.y - offsetY},
+                        {
+                            duration: 1000 * (distance / this.ball.speed),
+                            loop: false,
+                        });
+                }
+            }
+        }
+        this.ball.point.x += offsetX;
+        this.ball.point.y += offsetY;
+
+        //tmp.forEach(t=>t.forEach(t1=>console.log(t1.y)));
     }
 }
